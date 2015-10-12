@@ -34,8 +34,11 @@ if (Meteor.isClient) {
     Template.todoList.events({
       "change .todo-item-check": function (ev) {
         var status = $(ev.target).is(':checked');
-        TodoColl.update({_id: this._id}, {$set: {done: status}});
-        $(ev.target).parent().css('text-decoration', status ? 'line-through' : 'none');
+        TodoColl.update({_id: this._id}, {$set: {done: status}}, function (e, n) {
+          if (!e) {
+            $(ev.target).parent().css('text-decoration', status ? 'line-through' : 'none');
+          }
+        });
       },
       "click #delete-done": function (ev) {
         TodoColl.find({"done": true}).forEach(function (todo) {
