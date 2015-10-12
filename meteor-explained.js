@@ -1,14 +1,21 @@
-var TodoColl    = new Mongo.Collection('Todos'),
-    alwaysTrue  = function () {return true};
-
-TodoColl.allow({
-  insert: alwaysTrue,
-  update: alwaysTrue,
-  remove: alwaysTrue
-});
+// var TodoColl    = new Mongo.Collection('Todos'),
+//     alwaysTrue  = function () {return true};
+//
+// TodoColl.allow({
+//   insert: alwaysTrue,
+//   update: alwaysTrue,
+//   remove: alwaysTrue
+// });
 
 if (Meteor.isClient) {
-    Meteor.subscribe('todos');
+    var TodoColl    = new Mongo.Collection(null),
+        alwaysTrue  = function () {return true};
+
+    TodoColl.allow({
+      insert: alwaysTrue,
+      update: alwaysTrue,
+      remove: alwaysTrue
+    });
 
     Template.addTodo.events({
       "click #add-todo": function (ev) {
@@ -48,8 +55,8 @@ if (Meteor.isClient) {
     });
 }
 
-if (Meteor.isServer) {
-  Meteor.startup(function () {
-    Meteor.publish('todos', function () { return TodoColl.find({}) })
-  });
-}
+// if (Meteor.isServer) {
+//   Meteor.startup(function () {
+//     Meteor.publish('todos', function () { return TodoColl.find({}) })
+//   });
+// }
